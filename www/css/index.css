@@ -24,18 +24,7 @@ body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#E4E4E4;
-    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image:-webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-        color-stop(0, #A7A7A7),
-        color-stop(0.51, #E4E4E4)
-    );
-    background-attachment:fixed;
+   
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:12px;
     height:100%;
@@ -47,15 +36,8 @@ body {
 
 /* Portrait layout (default) */
 .app {
-    background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
-    position:absolute;             /* position in the center of the screen */
-    left:50%;
-    top:50%;
-    height:50px;                   /* text area height */
-    width:225px;                   /* text area width */
     text-align:center;
-    padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
-    margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+    padding:10px 20px 0px 20px;     /* image height is 200px (bottom 20px are overlapped with text) */
                                    /* offset horizontal: half of text area width */
 }
 
@@ -112,4 +94,37 @@ h1 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+}
+
+/* add style doni.enginer@gmail.com */
+.col-form-label {
+    padding-top: 10px;
+}
+.col-md-2 {
+    width: 20%;
+    float: left;
+}
+.col-md-3 {
+    width: 30%;
+    float: left;
+}
+.col-md-4 {
+    width: 40%;
+    float: left;
+}
+.col-md-5 {
+    width: 50%;
+    float: left;
+}
+.col-md-6 {
+    width: 60%;
+    float: left;
+}
+.col-md-7 {
+    width: 70%;
+    float: left;
+}
+.col-md-8 {
+    width: 80%;
+    float: left;
 }

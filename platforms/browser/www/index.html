@@ -51,15 +51,16 @@
 <body>
     <div class="app">
         <div class="wrapper">
-            <form class="form-signin">       
+            <form class="form-signin" style="position: relative;" onsubmit="return false;">     
+                <span class="btn btn-success" onclick="window.location.replace('config.html')" style="position: absolute; top:5px; right: 10px;">Config</span>  
               <h2 class="form-signin-heading">Login System</h2>
                <select class="form-control" id="partai" name="partai">
                     <option value=""> -- Partai -- </option>
                 </select>
-                <select class="form-control" id="partai" name="partai">
+                <select class="form-control" id="juri" name="juri">
                     <option value=""> -- Wasit Juri -- </option>
                 </select>
-              <input type="password" class="form-control" name="password" placeholder="Password" required=""/>      
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password" required=""/>      
               <a class="btn btn-lg btn-primary btn-block" id="btn-login">Login</a>   
               <h4 style="text-align: center;">
                   APLIKASI WASIT JURI<br />     
@@ -75,13 +76,96 @@
     <script type="text/javascript">
         app.initialize();
 
-        $(function(){
-            $('#btn-login').on('click', function(){
-                alert("Login success");
+        var url_api = 'http://175.103.49.237/silat/api.php';
 
-                //window.location = 'wasit_juri.html';
-                window.location.replace('spec.html');
-                return false;
+        $(function(){
+
+            // get partai
+            $.ajax({
+                url: url_api, 
+                data : {a : 'partai'},
+                type: "GET",
+                dataType: "json",
+                crossDomain: true,
+                success: function(obj){
+
+                  var html = "<option value=\"\"> -- Partai -- </option>";
+                  
+                  $.each(obj, function(key, value){
+
+                    html += "<option value=\""+ value.id +"\">"+ value.name +"</option>";
+                  })
+
+                  $("#partai").html(html);
+                }
+            });
+
+            // get juri
+            $.ajax({
+                url: url_api, 
+                data : {a : 'juri'},
+                type: "GET",
+                dataType: "json",
+                crossDomain: true,
+                success: function(obj){
+
+                  var html = "<option value=\"\"> -- Wasit Juri -- </option>";
+                  
+                  $.each(obj, function(key, value){
+                    html += "<option value=\""+ value.id +"\">"+ value.name +"</option>";
+
+                  })
+
+                  $("#juri").html(html);
+                }
+            });
+
+
+            $('#btn-login').on('click', function(){
+
+                var id_wasit = $("#juri").val();
+                var pass = $('#password').val();
+                var id_partai = $("#partai").val();
+
+                if(id_partai == "")
+                {
+                    alert('Partai Harus dipilih');
+                    return false;
+                } 
+
+                if(id_wasit == "")
+                {
+                    alert('Wasit Harus dipilih');
+                    return false;
+                }
+
+                if(pass == "")
+                {
+                    alert('Password Harus dipilih');
+                    return false;
+                }
+
+
+                // get juri
+                $.ajax({
+                    url: url_api, 
+                    data : {a : 'login', id: id_wasit, password: pass},
+                    type: "GET",
+                    dataType: "json",
+                    crossDomain: true,
+                    success: function(obj){
+                        console.log(obj);
+                        if(obj.status == 'error'){
+                            alert('Password anda salah');
+                        }else{
+                            window.localStorage.setItem("is_login", 1);
+                            window.localStorage.setItem("juri", id_wasit);
+                            window.localStorage.setItem("partai", id_partai);
+
+                            window.location.replace('penilaian.html');    
+                        }
+                    }
+                });
             });
         });
     </script>
